@@ -23,6 +23,7 @@ public class KullaniciController {
     public KullaniciResponse getKullanici(@RequestBody KullaniciRequest request) {
         KullaniciResponse response = new KullaniciResponse();
         //KullaniciResponse kullaniciResponse = kullaniciService.getKullanici(request);
+
         List<Kullanici> kullaniciList = new ArrayList<>();
         Kullanici kullanici = new Kullanici();
         kullanici.setKullaniciAdi(request.getKullaniciAdi());
