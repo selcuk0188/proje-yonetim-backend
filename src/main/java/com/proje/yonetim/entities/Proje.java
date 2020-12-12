@@ -1,10 +1,8 @@
 package com.proje.yonetim.entities;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "proje")
@@ -13,20 +11,25 @@ public class Proje {
     @Id
     private Integer id;
 
-    @Column(name = "ders_id")
-    private String dersid;
-
     @Column(name = "proje_adi")
     private String projeAdi;
 
-    @Column(name = "durum")
-    private String durum;
-
     @Column(name = "son_islem")
-    private String sonIslem;
+    private Date sonIslem;
 
     @Column(name = "son_islem_tarihi")
     private String sonIslemTarihi;
+
+    @Column(name = "kullanici_id")
+    private Integer kullaniciId;
+
+    @OneToOne
+    @JoinColumn(name = "ders_id", referencedColumnName = "id")
+    private Ders dersid;
+
+    @OneToOne
+    @JoinColumn(name = "id", referencedColumnName = "proje_id")
+    private ProjeOnay projeOnay;
 
     public Integer getId() {
         return id;
@@ -34,14 +37,6 @@ public class Proje {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDersid() {
-        return dersid;
-    }
-
-    public void setDersid(String dersid) {
-        this.dersid = dersid;
     }
 
     public String getProjeAdi() {
@@ -52,19 +47,11 @@ public class Proje {
         this.projeAdi = projeAdi;
     }
 
-    public String getDurum() {
-        return durum;
-    }
-
-    public void setDurum(String durum) {
-        this.durum = durum;
-    }
-
-    public String getSonIslem() {
+    public Date getSonIslem() {
         return sonIslem;
     }
 
-    public void setSonIslem(String sonIslem) {
+    public void setSonIslem(Date sonIslem) {
         this.sonIslem = sonIslem;
     }
 
@@ -74,5 +61,29 @@ public class Proje {
 
     public void setSonIslemTarihi(String sonIslemTarihi) {
         this.sonIslemTarihi = sonIslemTarihi;
+    }
+
+    public Ders getDersid() {
+        return dersid;
+    }
+
+    public void setDersid(Ders dersid) {
+        this.dersid = dersid;
+    }
+
+    public ProjeOnay getProjeOnay() {
+        return projeOnay;
+    }
+
+    public void setProjeOnay(ProjeOnay projeOnay) {
+        this.projeOnay = projeOnay;
+    }
+
+    public Integer getkullaniciId() {
+        return kullaniciId;
+    }
+
+    public void setkullaniciId(Integer kullaniciId) {
+        this.kullaniciId = kullaniciId;
     }
 }

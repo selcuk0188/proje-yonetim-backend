@@ -4,5 +4,9 @@ import com.proje.yonetim.entities.Mesaj;
 import com.proje.yonetim.entities.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface MesajRepository extends JpaRepository<Mesaj, Integer> {
+
+    List<Mesaj> findBykullaniciId(Integer kullaniciId);
 }

@@ -2,15 +2,11 @@ package com.proje.yonetim.controller;
 
 
 import com.proje.yonetim.entities.Kullanici;
-import com.proje.yonetim.model.KullaniciRequest;
-import com.proje.yonetim.model.KullaniciResponse;
+import com.proje.yonetim.model.*;
 import com.proje.yonetim.service.KullaniciService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 public class KullaniciController {
@@ -18,20 +14,29 @@ public class KullaniciController {
     @Autowired
     private KullaniciService kullaniciService;
 
-    @CrossOrigin(origins = "http://localhost:63342")
-    @RequestMapping(value = "/kullanici", method = RequestMethod.POST)
-    public KullaniciResponse getKullanici(@RequestBody KullaniciRequest request) {
-        KullaniciResponse response = new KullaniciResponse();
-        //KullaniciResponse kullaniciResponse = kullaniciService.getKullanici(request);
+    //@CrossOrigin(origins = "http://localhost:63342")
+    @RequestMapping(value = "/kullaniciListele", method = RequestMethod.POST)
+    public KullaniciResponse kullaniciListele(@RequestBody KullaniciRequest request) {
+        return kullaniciService.getKullaniciList(request);
+    }
 
+    @RequestMapping(value = "/kullaniciLogin", method = RequestMethod.POST)
+    public LoginKullaniciResponse kullaniciLogin(@RequestParam("kullaniciAdi") String kullaniciAdi, @RequestParam("sifre") String sifre) {
+        return kullaniciService.getKullanici(kullaniciAdi, sifre);
+    }
 
-        List<Kullanici> kullaniciList = new ArrayList<>();
-        Kullanici kullanici = new Kullanici();
-        kullanici.setKullaniciAdi(request.getKullaniciAdi());
-        kullanici.setSifre(request.getSifre());
-        kullaniciList.addAll(Arrays.asList(kullanici));
+    @RequestMapping(value = "/kullaniciKayit", method = RequestMethod.POST)
+    public KullaniciKayitResponse kullaniciKayit(@RequestBody Kullanici kullanici) {
+        return kullaniciService.saveKullanici(kullanici);
+    }
 
-        response.setKullaniciList(kullaniciList);
-        return response;
+    @RequestMapping(value = "/kullaniciGuncelle", method = RequestMethod.POST)
+    public KullaniciGuncelleResponse kullaniciGuncelle(@RequestBody Kullanici kullanici) {
+        return kullaniciService.updateKullanici(kullanici);
+    }
+
+    @RequestMapping(value = "/kullaniciSil", method = RequestMethod.POST)
+    public KullaniciSilResponse kullaniciSil(@RequestParam("kullaniciId") Integer kullaniciId) {
+        return kullaniciService.deleteKullanici(kullaniciId);
     }
 }

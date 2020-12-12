@@ -17,7 +17,7 @@ public class RolService {
     @Autowired
     private RolRepository rolRepository;
 
-    public RolResponse getrol() {
+    public RolResponse getRol() {
         RolResponse response = new RolResponse();
         List<Rol> rolList = rolRepository.findAll();
         response.setRolList(rolList);

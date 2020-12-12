@@ -6,14 +6,13 @@ import java.util.List;
 
 public class ProjeResponse {
 
-    private List<Proje> projeList;
+    private Proje proje;
 
-    public List<Proje> getProjeList() {
-        return projeList;
+    public Proje getProje() {
+        return proje;
     }
 
-    public void setProjeList(List<Proje> projeList) {
-        this.projeList = projeList;
+    public void setProje(Proje proje) {
+        this.proje = proje;
     }
-
 }

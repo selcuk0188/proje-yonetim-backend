@@ -1,10 +1,7 @@
 package com.proje.yonetim.entities;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "kullanici")
@@ -22,14 +19,15 @@ public class Kullanici {
     @Column(name = "sifre")
     private String sifre;
 
-    @Column(name = "rol_id")
-    private String rolId;
-
     @Column(name = "durum")
     private String durum;
 
     @Column(name = "tc_no")
     private String tcNo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+    private Rol rol;
 
     public Integer getId() {
         return id;
@@ -63,12 +61,12 @@ public class Kullanici {
         this.sifre = sifre;
     }
 
-    public String getRolId() {
-        return rolId;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setRolId(String rolId) {
-        this.rolId = rolId;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public String getDurum() {

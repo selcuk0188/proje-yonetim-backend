@@ -14,7 +14,7 @@ public class ProjeOnay {
     private Integer id;
 
     @Column(name = "proje_id")
-    private String projeid;
+    private Integer projeId;
 
     @Column(name = "durum")
     private String durum;
@@ -27,12 +27,12 @@ public class ProjeOnay {
         this.id = id;
     }
 
-    public String getProjeid() {
-        return projeid;
+    public Integer getProjeId() {
+        return projeId;
     }
 
-    public void setProjeid(String projeid) {
-        this.projeid = projeid;
+    public void setProjeId(Integer projeId) {
+        this.projeId = projeId;
     }
 
     public String getDurum() {

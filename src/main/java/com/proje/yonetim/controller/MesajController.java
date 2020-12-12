@@ -1,14 +1,12 @@
 package com.proje.yonetim.controller;
 
 
+import com.proje.yonetim.entities.Mesaj;
+import com.proje.yonetim.model.MesajKayitResponse;
 import com.proje.yonetim.model.MesajResponse;
-import com.proje.yonetim.model.RolResponse;
 import com.proje.yonetim.service.MesajService;
-import com.proje.yonetim.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MesajController {
@@ -16,11 +14,19 @@ public class MesajController {
     @Autowired
     private MesajService mesajService;
 
-    @RequestMapping(value = "/mesaj", method = RequestMethod.POST)
-    public MesajResponse getMesaj() {
-        MesajResponse response = new MesajResponse();
-        MesajResponse mesajResponse = mesajService.getMesaj();
-        response.setMesajList(mesajResponse.getMesajList());
-        return response;
+    @RequestMapping(value = "/mesajListele", method = RequestMethod.POST)
+    public MesajResponse mesajListele() {
+        return mesajService.getMesajList();
     }
+
+    @RequestMapping(value = "/mesajByKullaniciId", method = RequestMethod.POST)
+    public MesajResponse mesajByKullaniciId(@RequestParam("kullaniciId") Integer kullaniciId) {
+        return mesajService.getMesajBykullaniciId(kullaniciId);
+    }
+
+    @RequestMapping(value = "/mesajKayit", method = RequestMethod.POST)
+    public MesajKayitResponse mesajKayit(@RequestBody Mesaj mesaj) { return mesajService.mesajKayit(mesaj);
+    }
+
+
 }

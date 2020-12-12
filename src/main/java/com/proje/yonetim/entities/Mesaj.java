@@ -33,10 +33,10 @@ public class Mesaj {
     private String dosyaicerigi;
 
     @Column(name = "gonderen_kullanici_id")
-    private String gonderenkullaniciid;
+    private Integer gonderenkullaniciid;
 
     @Column(name = "gonderilen_kullanici_id")
-    private String gönderilenkullaniciid;
+    private Integer gönderilenkullaniciid;
 
     @Column(name = "okuyan_sayisi")
     private Integer okuyansayisi;
@@ -47,9 +47,11 @@ public class Mesaj {
     @Column(name = "durum")
     private String durum;
 
+    @Column(name = "kullanici_id")
+    private Integer kullaniciId;
+
     @Column(name = "tarih")
     private Date tarih;
-
 
     public Integer getId() {
         return id;
@@ -107,19 +109,19 @@ public class Mesaj {
         this.dosyaicerigi = dosyaicerigi;
     }
 
-    public String getGonderenkullaniciid() {
+    public Integer getGonderenkullaniciid() {
         return gonderenkullaniciid;
     }
 
-    public void setGonderenkullaniciid(String gonderenkullaniciid) {
+    public void setGonderenkullaniciid(Integer gonderenkullaniciid) {
         this.gonderenkullaniciid = gonderenkullaniciid;
     }
 
-    public String getGönderilenkullaniciid() {
+    public Integer getGönderilenkullaniciid() {
         return gönderilenkullaniciid;
     }
 
-    public void setGönderilenkullaniciid(String gönderilenkullaniciid) {
+    public void setGönderilenkullaniciid(Integer gönderilenkullaniciid) {
         this.gönderilenkullaniciid = gönderilenkullaniciid;
     }
 
@@ -153,5 +155,13 @@ public class Mesaj {
 
     public void setTarih(Date tarih) {
         this.tarih = tarih;
+    }
+
+    public Integer getkullaniciId() {
+        return kullaniciId;
+    }
+
+    public void setkullaniciId(Integer kullaniciId) {
+        this.kullaniciId = kullaniciId;
     }
 }
