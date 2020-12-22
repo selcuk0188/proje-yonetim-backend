@@ -30,9 +30,13 @@ public class MesajService {
         return response;
     }
 
-    public MesajResponse getMesajBykullaniciId(Integer kullaniciId) {
+    public MesajResponse getMesajBykullaniciId(Integer kullaniciId, Integer kim) {
         MesajResponse response = new MesajResponse();
-        List<Mesaj> mesajList = mesajRepository.findBykullaniciId(kullaniciId);
+        List<Mesaj> mesajList = null;
+        if (kim == 1)
+            mesajList = mesajRepository.findByGonderenkullaniciid(kullaniciId);
+        else
+            mesajList = mesajRepository.findByGonderilenkullaniciid(kullaniciId);
         response.setMesajList(mesajList);
         return response;
     }

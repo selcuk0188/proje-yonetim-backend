@@ -31,8 +31,10 @@ public class ProjeController {
     }
 
     @RequestMapping(value = "/projeAta", method = RequestMethod.POST)
-    public ProjeKayitResponse projeAta(@RequestParam("projeId") Integer projeId, @RequestParam("kullaniciId") Integer kullaniciId) {
-        return projeService.assignProje(projeId, kullaniciId);
+    public ProjeKayitResponse projeAta(@RequestParam("projeKonusu") String projeKonusu,
+                                       @RequestParam("kullaniciId") Integer kullaniciId,
+                                       @RequestParam("dersId") Integer dersId) {
+        return projeService.assignProje(projeKonusu, kullaniciId, dersId);
     }
 
 }

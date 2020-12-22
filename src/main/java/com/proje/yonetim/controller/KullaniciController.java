@@ -2,10 +2,14 @@ package com.proje.yonetim.controller;
 
 
 import com.proje.yonetim.entities.Kullanici;
+import com.proje.yonetim.entities.Rol;
 import com.proje.yonetim.model.*;
 import com.proje.yonetim.service.KullaniciService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @RestController
@@ -14,10 +18,9 @@ public class KullaniciController {
     @Autowired
     private KullaniciService kullaniciService;
 
-    //@CrossOrigin(origins = "http://localhost:63342")
     @RequestMapping(value = "/kullaniciListele", method = RequestMethod.POST)
-    public KullaniciResponse kullaniciListele(@RequestBody KullaniciRequest request) {
-        return kullaniciService.getKullaniciList(request);
+    public KullaniciResponse kullaniciListele(@RequestParam("rolId") Integer rolId) {
+        return kullaniciService.getKullaniciList(rolId);
     }
 
     @RequestMapping(value = "/kullaniciLogin", method = RequestMethod.POST)

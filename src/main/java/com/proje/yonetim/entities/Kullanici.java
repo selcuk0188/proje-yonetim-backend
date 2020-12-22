@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Kullanici {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "ad_soyad")
@@ -25,9 +26,8 @@ public class Kullanici {
     @Column(name = "tc_no")
     private String tcNo;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rol_id", referencedColumnName = "id")
-    private Rol rol;
+    @Column(name = "rol_id")
+    private Integer rolId;
 
     public Integer getId() {
         return id;
@@ -61,14 +61,6 @@ public class Kullanici {
         this.sifre = sifre;
     }
 
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
     public String getDurum() {
         return durum;
     }
@@ -83,5 +75,13 @@ public class Kullanici {
 
     public void setTcNo(String tcNo) {
         this.tcNo = tcNo;
+    }
+
+    public Integer getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(Integer rolId) {
+        this.rolId = rolId;
     }
 }

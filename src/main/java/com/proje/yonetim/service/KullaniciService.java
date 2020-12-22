@@ -15,9 +15,9 @@ public class KullaniciService {
     @Autowired
     private KullaniciRepository kullaniciRepository;
 
-    public KullaniciResponse getKullaniciList(KullaniciRequest request) {
+    public KullaniciResponse getKullaniciList(Integer rolId) {
         KullaniciResponse response = new KullaniciResponse();
-        List<Kullanici> kullaniciList = kullaniciRepository.findAll();
+        List<Kullanici> kullaniciList = kullaniciRepository.findByRolId(rolId);
         response.setKullaniciList(kullaniciList);
         return response;
 
@@ -26,6 +26,9 @@ public class KullaniciService {
     public LoginKullaniciResponse getKullanici(String kullaniciAdi, String sifre) {
         LoginKullaniciResponse response = new LoginKullaniciResponse();
         Kullanici kullanici = kullaniciRepository.findByKullaniciAdiAndSifre(kullaniciAdi, sifre);
+        if(kullanici == null){
+            response.setBasariliMi(false);
+        }
         response.setKullanici(kullanici);
         return response;
     }
@@ -43,7 +46,7 @@ public class KullaniciService {
         if (kullanici != null) {
             Optional<Kullanici> kullanici_ = kullaniciRepository.findById(kullanici.getId());
             kullanici_.get().setKullaniciAdi(kullanici.getKullaniciAdi());
-            kullanici_.get().setRol(kullanici.getRol());
+            //kullanici_.get().setRol(kullanici.getRol());
             kullanici_.get().setAdSoyad(kullanici.getAdSoyad());
             kullanici_.get().setDurum(kullanici.getDurum());
             kullanici_.get().setSifre(kullanici.getSifre());

@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ProjeRepository extends JpaRepository<Proje, Integer> {
 
-    List<Proje> findBykullaniciId(Integer kullaniciId);
+    List<Proje> findByKullaniciId(Integer kullaniciId);
+
+    Proje findByKullaniciIdAndDersId(Integer kullaniciId, Integer dersId);
 }

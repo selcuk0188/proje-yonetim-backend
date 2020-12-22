@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface MesajRepository extends JpaRepository<Mesaj, Integer> {
 
-    List<Mesaj> findBykullaniciId(Integer kullaniciId);
+    List<Mesaj> findByGonderenkullaniciid(Integer kullaniciId);
+
+    List<Mesaj> findByGonderilenkullaniciid(Integer kullaniciId);
 }

@@ -8,6 +8,9 @@ import com.proje.yonetim.service.MesajService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Date;
+
 @RestController
 public class MesajController {
 
@@ -15,17 +18,18 @@ public class MesajController {
     private MesajService mesajService;
 
     @RequestMapping(value = "/mesajListele", method = RequestMethod.POST)
-    public MesajResponse mesajListele() {
+    public MesajResponse mesajListele(@RequestParam("kullaniciId") Integer kullaniciId) {
         return mesajService.getMesajList();
     }
 
     @RequestMapping(value = "/mesajByKullaniciId", method = RequestMethod.POST)
-    public MesajResponse mesajByKullaniciId(@RequestParam("kullaniciId") Integer kullaniciId) {
-        return mesajService.getMesajBykullaniciId(kullaniciId);
+    public MesajResponse mesajByKullaniciId(@RequestParam("kullaniciId") Integer kullaniciId, @RequestParam("kim") Integer kim) {
+        return mesajService.getMesajBykullaniciId(kullaniciId, kim);
     }
 
     @RequestMapping(value = "/mesajKayit", method = RequestMethod.POST)
-    public MesajKayitResponse mesajKayit(@RequestBody Mesaj mesaj) { return mesajService.mesajKayit(mesaj);
+    public MesajKayitResponse mesajKayit(@RequestBody Mesaj mesaj) {
+        return mesajService.mesajKayit(mesaj);
     }
 
 

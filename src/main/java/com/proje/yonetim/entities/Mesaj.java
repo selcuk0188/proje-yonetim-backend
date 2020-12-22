@@ -1,10 +1,7 @@
 package com.proje.yonetim.entities;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -12,19 +9,14 @@ import java.util.Date;
 public class Mesaj {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "mesaj_basligi")
     private String mesajbasligi;
 
-    @Column(name = "mesaj_konusu")
-    private String mesajkonusu;
-
     @Column(name = "mesaj_icerigi")
     private String mesajicerigi;
-
-    @Column(name = "yeni_mesaj_mi")
-    private String yenimesajmi;
 
     @Column(name = "dosya_eki_var_mi")
     private String dosyaekivarmi;
@@ -36,19 +28,13 @@ public class Mesaj {
     private Integer gonderenkullaniciid;
 
     @Column(name = "gonderilen_kullanici_id")
-    private Integer gönderilenkullaniciid;
+    private Integer gonderilenkullaniciid;
 
-    @Column(name = "okuyan_sayisi")
-    private Integer okuyansayisi;
-
-    @Column(name = "okumayan_sayisi")
-    private Integer okumayansayisi;
+    @Column(name = "yeni_mesaj_mi")
+    private String yenimesajmi;
 
     @Column(name = "durum")
     private String durum;
-
-    @Column(name = "kullanici_id")
-    private Integer kullaniciId;
 
     @Column(name = "tarih")
     private Date tarih;
@@ -67,14 +53,6 @@ public class Mesaj {
 
     public void setMesajbasligi(String mesajbasligi) {
         this.mesajbasligi = mesajbasligi;
-    }
-
-    public String getMesajkonusu() {
-        return mesajkonusu;
-    }
-
-    public void setMesajkonusu(String mesajkonusu) {
-        this.mesajkonusu = mesajkonusu;
     }
 
     public String getMesajicerigi() {
@@ -117,28 +95,12 @@ public class Mesaj {
         this.gonderenkullaniciid = gonderenkullaniciid;
     }
 
-    public Integer getGönderilenkullaniciid() {
-        return gönderilenkullaniciid;
+    public Integer getGonderilenkullaniciid() {
+        return gonderilenkullaniciid;
     }
 
-    public void setGönderilenkullaniciid(Integer gönderilenkullaniciid) {
-        this.gönderilenkullaniciid = gönderilenkullaniciid;
-    }
-
-    public Integer getOkuyansayisi() {
-        return okuyansayisi;
-    }
-
-    public void setOkuyansayisi(Integer okuyansayisi) {
-        this.okuyansayisi = okuyansayisi;
-    }
-
-    public Integer getOkumayansayisi() {
-        return okumayansayisi;
-    }
-
-    public void setOkumayansayisi(Integer okumayansayisi) {
-        this.okumayansayisi = okumayansayisi;
+    public void setGonderilenkullaniciid(Integer gonderilenkullaniciid) {
+        this.gonderilenkullaniciid = gonderilenkullaniciid;
     }
 
     public String getDurum() {
@@ -155,13 +117,5 @@ public class Mesaj {
 
     public void setTarih(Date tarih) {
         this.tarih = tarih;
-    }
-
-    public Integer getkullaniciId() {
-        return kullaniciId;
-    }
-
-    public void setkullaniciId(Integer kullaniciId) {
-        this.kullaniciId = kullaniciId;
     }
 }

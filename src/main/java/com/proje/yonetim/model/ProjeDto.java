@@ -1,35 +1,26 @@
-package com.proje.yonetim.entities;
+package com.proje.yonetim.model;
 
+import com.proje.yonetim.entities.Proje;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@Table(name = "proje")
-public class Proje {
+public class ProjeDto {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(name = "proje_konusu")
     private String projeKonusu;
-
-    @Column(name = "ders_id")
     private Integer dersId;
-
-    @Column(name = "kullanici_id")
     private Integer kullaniciId;
-
-    @Column(name = "son_islem")
     private String sonIslem;
-
-    @Column(name = "son_islem_tarihi")
     private LocalDate sonIslemTarihi;
-
-    @Column(name = "durum")
     private Integer durum;
+    private String tckn;
+    private String adiSoyadi;
 
     public Integer getId() {
         return id;
@@ -85,5 +76,21 @@ public class Proje {
 
     public void setDurum(Integer durum) {
         this.durum = durum;
+    }
+
+    public String getTckn() {
+        return tckn;
+    }
+
+    public void setTckn(String tckn) {
+        this.tckn = tckn;
+    }
+
+    public String getAdiSoyadi() {
+        return adiSoyadi;
+    }
+
+    public void setAdiSoyadi(String adiSoyadi) {
+        this.adiSoyadi = adiSoyadi;
     }
 }
