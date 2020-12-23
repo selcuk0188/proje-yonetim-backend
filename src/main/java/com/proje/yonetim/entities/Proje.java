@@ -26,7 +26,7 @@ public class Proje {
     private String sonIslem;
 
     @Column(name = "son_islem_tarihi")
-    private LocalDate sonIslemTarihi;
+    private String sonIslemTarihi;
 
     @Column(name = "durum")
     private Integer durum;
@@ -71,11 +71,11 @@ public class Proje {
         this.sonIslem = sonIslem;
     }
 
-    public LocalDate getSonIslemTarihi() {
+    public String getSonIslemTarihi() {
         return sonIslemTarihi;
     }
 
-    public void setSonIslemTarihi(LocalDate sonIslemTarihi) {
+    public void setSonIslemTarihi(String sonIslemTarihi) {
         this.sonIslemTarihi = sonIslemTarihi;
     }
 

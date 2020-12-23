@@ -24,8 +24,8 @@ public class KullaniciController {
     }
 
     @RequestMapping(value = "/kullaniciLogin", method = RequestMethod.POST)
-    public LoginKullaniciResponse kullaniciLogin(@RequestParam("kullaniciAdi") String kullaniciAdi, @RequestParam("sifre") String sifre) {
-        return kullaniciService.getKullanici(kullaniciAdi, sifre);
+    public LoginKullaniciResponse kullaniciLogin(@RequestParam("tckn") String tckn, @RequestParam("sifre") String sifre) {
+        return kullaniciService.getKullanici(tckn, sifre);
     }
 
     @RequestMapping(value = "/kullaniciKayit", method = RequestMethod.POST)

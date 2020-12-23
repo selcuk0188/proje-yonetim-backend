@@ -2,6 +2,7 @@ package com.proje.yonetim.controller;
 
 
 import com.proje.yonetim.entities.Mesaj;
+import com.proje.yonetim.model.MesajKayitRequest;
 import com.proje.yonetim.model.MesajKayitResponse;
 import com.proje.yonetim.model.MesajResponse;
 import com.proje.yonetim.service.MesajService;

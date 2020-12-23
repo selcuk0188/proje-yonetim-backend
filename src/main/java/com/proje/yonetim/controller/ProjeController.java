@@ -37,4 +37,9 @@ public class ProjeController {
         return projeService.assignProje(projeKonusu, kullaniciId, dersId);
     }
 
+    @RequestMapping(value = "/projeDurumGuncelle", method = RequestMethod.POST)
+    public ProjeKayitResponse projeKaydet(@RequestParam("projeId") Integer projeId) {
+        return projeService.updateProje(projeId);
+    }
+
 }

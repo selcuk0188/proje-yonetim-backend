@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface KullaniciRepository extends JpaRepository<Kullanici, Integer> {
 
-    Kullanici findByKullaniciAdiAndSifre(String kullaniciAdi, String sifre);
+    Kullanici findByTcNoAndSifre(String kullaniciAdi, String sifre);
 
     List<Kullanici> findByRolId(Integer rolId);
 

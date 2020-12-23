@@ -17,10 +17,11 @@ public class ProjeDto {
     private Integer dersId;
     private Integer kullaniciId;
     private String sonIslem;
-    private LocalDate sonIslemTarihi;
+    private String sonIslemTarihi;
     private Integer durum;
     private String tckn;
     private String adiSoyadi;
+    private String dersAdi;
 
     public Integer getId() {
         return id;
@@ -62,11 +63,11 @@ public class ProjeDto {
         this.sonIslem = sonIslem;
     }
 
-    public LocalDate getSonIslemTarihi() {
+    public String getSonIslemTarihi() {
         return sonIslemTarihi;
     }
 
-    public void setSonIslemTarihi(LocalDate sonIslemTarihi) {
+    public void setSonIslemTarihi(String sonIslemTarihi) {
         this.sonIslemTarihi = sonIslemTarihi;
     }
 
@@ -92,5 +93,13 @@ public class ProjeDto {
 
     public void setAdiSoyadi(String adiSoyadi) {
         this.adiSoyadi = adiSoyadi;
+    }
+
+    public String getDersAdi() {
+        return dersAdi;
+    }
+
+    public void setDersAdi(String dersAdi) {
+        this.dersAdi = dersAdi;
     }
 }

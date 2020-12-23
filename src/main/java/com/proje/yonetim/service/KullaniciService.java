@@ -23,9 +23,9 @@ public class KullaniciService {
 
     }
 
-    public LoginKullaniciResponse getKullanici(String kullaniciAdi, String sifre) {
+    public LoginKullaniciResponse getKullanici(String tckn, String sifre) {
         LoginKullaniciResponse response = new LoginKullaniciResponse();
-        Kullanici kullanici = kullaniciRepository.findByKullaniciAdiAndSifre(kullaniciAdi, sifre);
+        Kullanici kullanici = kullaniciRepository.findByTcNoAndSifre(tckn, sifre);
         if(kullanici == null){
             response.setBasariliMi(false);
         }
