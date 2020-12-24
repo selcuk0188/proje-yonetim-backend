@@ -7,13 +7,13 @@ import java.util.List;
 
 public class MesajResponse {
 
-    private List<Mesaj> mesajList;
+    private List<MesajDto> mesajList;
 
-    public List<Mesaj> getMesajList() {
+    public List<MesajDto> getMesajList() {
         return mesajList;
     }
 
-    public void setMesajList(List<Mesaj> mesajList) {
+    public void setMesajList(List<MesajDto> mesajList) {
         this.mesajList = mesajList;
     }
 }

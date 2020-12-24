@@ -23,6 +23,14 @@ public class KullaniciService {
 
     }
 
+    public KullaniciResponse getKullaniciList() {
+        KullaniciResponse response = new KullaniciResponse();
+        List<Kullanici> kullaniciList = kullaniciRepository.findAll();
+        response.setKullaniciList(kullaniciList);
+        return response;
+
+    }
+
     public LoginKullaniciResponse getKullanici(String tckn, String sifre) {
         LoginKullaniciResponse response = new LoginKullaniciResponse();
         Kullanici kullanici = kullaniciRepository.findByTcNoAndSifre(tckn, sifre);

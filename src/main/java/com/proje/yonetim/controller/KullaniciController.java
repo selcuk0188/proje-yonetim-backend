@@ -23,6 +23,11 @@ public class KullaniciController {
         return kullaniciService.getKullaniciList(rolId);
     }
 
+    @RequestMapping(value = "/kullaniciListeleHepsi", method = RequestMethod.POST)
+    public KullaniciResponse kullaniciListele() {
+        return kullaniciService.getKullaniciList();
+    }
+
     @RequestMapping(value = "/kullaniciLogin", method = RequestMethod.POST)
     public LoginKullaniciResponse kullaniciLogin(@RequestParam("tckn") String tckn, @RequestParam("sifre") String sifre) {
         return kullaniciService.getKullanici(tckn, sifre);
