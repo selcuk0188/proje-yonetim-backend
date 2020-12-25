@@ -4,7 +4,7 @@ package com.proje.yonetim.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ders")
+@Table(name = "ders")               //ders tablosu ile iliskilendirilen java sınıfı(entity)
 public class Ders {
 
     @Id
