@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @EnableWebSecurity
 @SpringBootApplication
-public class ProjeYonetimApplication {
+public class ProjeYonetimApplication {   // Uygulamayı çalıştıran sınıf
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjeYonetimApplication.class, args);
