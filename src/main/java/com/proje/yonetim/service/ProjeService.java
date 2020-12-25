@@ -37,7 +37,7 @@ public class ProjeService {
     @Autowired
     private DersRepository dersRepository;
 
-    public ProjeListResponse getProjeList(Integer kullaniciId) {
+    public ProjeListResponse getProjeList(Integer kullaniciId) {        // proje listesini ilişkili tablodan getirir
         ProjeListResponse response = new ProjeListResponse();
         List<ProjeDto> result = new ArrayList<>();
         List<KullaniciDers> kullaniciDersList = kullaniciDersRepository.findByKullaniciId(kullaniciId);
