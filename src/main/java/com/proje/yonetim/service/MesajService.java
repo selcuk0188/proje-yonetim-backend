@@ -26,7 +26,7 @@ public class MesajService {
     @Autowired
     private KullaniciRepository kullaniciRepository;
 
-    public MesajResponse getMesajList() {
+    public MesajResponse getMesajList() {           // tüm mesajları getirir
         MesajResponse response = new MesajResponse();
         //List<Mesaj> mesajList = mesajRepository.findAll();
         //response.setMesajList(mesajList);
@@ -34,7 +34,7 @@ public class MesajService {
 
     }
 
-    public MesajKayitResponse mesajKayit(Mesaj mesaj) {
+    public MesajKayitResponse mesajKayit(Mesaj mesaj) {         // mesajı kaydeder
         MesajKayitResponse response = new MesajKayitResponse();
         try {
             mesaj.setDurum("aktif");
@@ -49,13 +49,13 @@ public class MesajService {
         return response;
     }
 
-    private String formattedDate() {
+    private String formattedDate() {        // tarihi formatlar
         LocalDateTime myDateObj = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
         return myDateObj.format(myFormatObj);
     }
 
-    public MesajResponse getMesajBykullaniciId(Integer kullaniciId, Integer kim) {
+    public MesajResponse getMesajBykullaniciId(Integer kullaniciId, Integer kim) {  // mesajı kullanıcı id sine göre getirir
         MesajResponse response = new MesajResponse();
         List<Mesaj> mesajList = null;
         List<MesajDto> mesajDtoList = new ArrayList<>();
@@ -71,7 +71,7 @@ public class MesajService {
     }
 
 
-    private MesajDto convert(Mesaj mesaj) {
+    private MesajDto convert(Mesaj mesaj) { // obje dönüşümü için
         MesajDto mesajDto = new MesajDto();
         mesajDto.setDosyaicerigi(mesaj.getDosyaicerigi());
         mesajDto.setDosyaekivarmi(mesaj.getDosyaekivarmi());
