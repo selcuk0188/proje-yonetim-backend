@@ -15,14 +15,14 @@ public class DersService {
     @Autowired
     private DersRepository dersRepository;
 
-    public DersResponse getDers() {
+    public DersResponse getDers() {                     // Tüm dersleri veritabanından getirir
         DersResponse response = new DersResponse();
         List<Ders> dersList = dersRepository.findAll();
         response.setDersList(dersList);
         return response;
     }
 
-    public DersKayitResponse saveDers(Ders ders) {
+    public DersKayitResponse saveDers(Ders ders) {      // Dersi veritabanına kaydeder
         DersKayitResponse response = new DersKayitResponse();
         dersRepository.save(ders);
         response.setBasariliMi(true);
