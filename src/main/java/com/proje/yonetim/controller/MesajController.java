@@ -20,17 +20,17 @@ public class MesajController {
     @Autowired
     private MesajService mesajService;
 
-    @RequestMapping(value = "/mesajListele", method = RequestMethod.POST)
+    @RequestMapping(value = "/mesajListele", method = RequestMethod.POST)               //kullanicinin id'sine göre mesajları listelener
     public MesajResponse mesajListele(@RequestParam("kullaniciId") Integer kullaniciId) {
         return mesajService.getMesajList();
     }
 
-    @RequestMapping(value = "/mesajByKullaniciId", method = RequestMethod.POST)
+    @RequestMapping(value = "/mesajByKullaniciId", method = RequestMethod.POST)  // kullanicinin isine göre role göre mesajları listeler
     public MesajResponse mesajByKullaniciId(@RequestParam("kullaniciId") Integer kullaniciId, @RequestParam("kim") Integer kim) {
         return mesajService.getMesajBykullaniciId(kullaniciId, kim);
     }
 
-    @RequestMapping(value = "/mesajKayit", method = RequestMethod.POST)
+    @RequestMapping(value = "/mesajKayit", method = RequestMethod.POST) // mesajın kaydedilmesini sağlar
     public MesajKayitResponse mesajKayit(@RequestBody Mesaj mesaj) {
         return mesajService.mesajKayit(mesaj);
     }
