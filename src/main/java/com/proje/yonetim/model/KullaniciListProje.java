@@ -11,6 +11,8 @@ public class KullaniciListProje {
     private String sifre;
     private String durum;
     private String tcNo;
+    private Integer dersId;
+    private String dersAdi;
     private Proje proje;
 
     public Proje getProje() {
@@ -67,5 +69,22 @@ public class KullaniciListProje {
 
     public void setTcNo(String tcNo) {
         this.tcNo = tcNo;
+    }
+
+
+    public Integer getDersId() {
+        return dersId;
+    }
+
+    public void setDersId(Integer dersId) {
+        this.dersId = dersId;
+    }
+
+    public String getDersAdi() {
+        return dersAdi;
+    }
+
+    public void setDersAdi(String dersAdi) {
+        this.dersAdi = dersAdi;
     }
 }

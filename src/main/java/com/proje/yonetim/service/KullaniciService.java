@@ -1,13 +1,15 @@
 package com.proje.yonetim.service;
 
-import com.proje.yonetim.entities.Kullanici;
-import com.proje.yonetim.entities.Proje;
+import com.proje.yonetim.entities.*;
 import com.proje.yonetim.model.*;
+import com.proje.yonetim.repository.DersRepository;
+import com.proje.yonetim.repository.KullaniciDersRepository;
 import com.proje.yonetim.repository.KullaniciRepository;
 import com.proje.yonetim.repository.ProjeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,17 +23,38 @@ public class KullaniciService {
     @Autowired
     private ProjeRepository projeRepository;
 
+    @Autowired
+    private KullaniciDersRepository kullaniciDersRepository;
 
-    public KullaniciListProjeResponse getKullaniciList(Integer rolId,Integer dersId) {
+    @Autowired
+    private DersRepository dersRepository;
+
+
+    public KullaniciListProjeResponse getKullaniciList(Integer rolId, Integer kullaniciId) {
         KullaniciListProjeResponse response = new KullaniciListProjeResponse();
-        List<Kullanici> kullaniciList = kullaniciRepository.findByRolId(rolId);
-        List<KullaniciListProje> kullaniciListProjeList = kullaniciList.stream().map(e -> convertKullanici(e,rolId,dersId)).collect(Collectors.toList());
-        response.setKullaniciList(kullaniciListProjeList);
+        List<KullaniciListProje> result = new ArrayList<>();
+        List<KullaniciDers> byKullaniciId = kullaniciDersRepository.findByKullaniciId(kullaniciId);
+        for (KullaniciDers kullaniciDers : byKullaniciId) {
+            List<KullaniciDers> byDersId = kullaniciDersRepository.findByDersId(kullaniciDers.getDersId());
+            for (KullaniciDers ld : byDersId) {
+                if (!ld.getKullaniciId().equals(kullaniciId)) {
+                    Optional<Kullanici> byId = kullaniciRepository.findById(ld.getKullaniciId());
+                    result.add(convertKullanici(byId.get(), rolId, ld.getDersId(), ld.getDersAdi()));
+                }
+            }
+        }
+        response.setKullaniciList(result);
         return response;
-
     }
 
-    private KullaniciListProje convertKullanici(Kullanici kullanici, Integer rolId, Integer dersId) {
+    public KullaniciResponse getKullaniciList(Integer rolId) {
+        KullaniciResponse response = new KullaniciResponse();
+        List<Kullanici> byRolId = kullaniciRepository.findByRolId(rolId);
+        response.setKullaniciList(byRolId);
+        return response;
+    }
+
+    private KullaniciListProje convertKullanici(Kullanici kullanici, Integer rolId, Integer dersId, String dersAdi) {
         KullaniciListProje kullaniciListProje = new KullaniciListProje();
         kullaniciListProje.setKullaniciAdi(kullanici.getKullaniciAdi());
         kullaniciListProje.setId(kullanici.getId());
@@ -39,9 +62,11 @@ public class KullaniciService {
         kullaniciListProje.setSifre(kullanici.getSifre());
         kullaniciListProje.setAdSoyad(kullanici.getAdSoyad());
         kullaniciListProje.setTcNo(kullanici.getTcNo());
+        kullaniciListProje.setDersId(dersId);
+        kullaniciListProje.setDersAdi(dersAdi);
         if (rolId == 1) {
-            Proje proje = projeRepository.findByKullaniciIdAndDersId(kullanici.getId(), dersId);
-            kullaniciListProje.setProje(proje==null ? new Proje() : proje);
+            List<Proje> p = projeRepository.findByKullaniciIdAndDersId(kullanici.getId(), dersId);
+            kullaniciListProje.setProje((p == null || p.isEmpty()) ? new Proje() : p.get(0));
         }
         return kullaniciListProje;
     }
@@ -64,6 +89,32 @@ public class KullaniciService {
 
     }
 
+    public KullaniciDersResponse getKullaniciDersList() {
+        KullaniciDersResponse response = new KullaniciDersResponse();
+        List<KullaniciDers> kullaniciDersList = kullaniciDersRepository.findAll();
+        List<KullaniciDersList> kullaniciDersListList = kullaniciDersList.stream().map(e -> convert(e)).collect(Collectors.toList());
+        response.setKullaniciDersList(kullaniciDersListList);
+        return response;
+
+    }
+
+    private KullaniciDersList convert(KullaniciDers kullaniciDers) {
+        KullaniciDersList kullaniciDersList = new KullaniciDersList();
+        kullaniciDersList.setKullaniciId(kullaniciDers.getKullaniciId());
+        kullaniciDersList.setDersId(kullaniciDers.getDersId());
+        kullaniciDersList.setId(kullaniciDers.getId());
+        kullaniciDersList.setDersAdi(kullaniciDers.getDersAdi());
+        Optional<Kullanici> byId = kullaniciRepository.findById(kullaniciDers.getKullaniciId());
+        if (byId.isPresent()) {
+            kullaniciDersList.setKullaniciAdSoyad(byId.get().getAdSoyad());
+            if (byId.get().getRolId() == 1)
+                kullaniciDersList.setKullaniciRol("Öğrenci");
+            else if (byId.get().getRolId() == 2)
+                kullaniciDersList.setKullaniciRol("Öğretmen");
+        }
+        return kullaniciDersList;
+    }
+
     public LoginKullaniciResponse getKullanici(String tckn, String sifre) {
         LoginKullaniciResponse response = new LoginKullaniciResponse();
         Kullanici kullanici = kullaniciRepository.findByTcNoAndSifre(tckn, sifre);
@@ -77,6 +128,15 @@ public class KullaniciService {
     public KullaniciKayitResponse saveKullanici(Kullanici kullanici) {
         KullaniciKayitResponse kullaniciKayitResponse = new KullaniciKayitResponse();
         kullaniciRepository.save(kullanici);
+        return kullaniciKayitResponse;
+    }
+
+    public KullaniciKayitResponse saveKullaniciDers(KullaniciDers kullaniciDers) {
+        KullaniciKayitResponse kullaniciKayitResponse = new KullaniciKayitResponse();
+        Optional<Ders> dersAdi = dersRepository.findById(kullaniciDers.getDersId());
+        if (dersAdi.isPresent())
+            kullaniciDers.setDersAdi(dersAdi.get().getDersadi());
+        kullaniciDersRepository.save(kullaniciDers);
         kullaniciKayitResponse.setBasariliMi(true);
         return kullaniciKayitResponse;
     }
@@ -102,8 +162,7 @@ public class KullaniciService {
         KullaniciSilResponse kullaniciKayitResponse = new KullaniciSilResponse();
         Optional<Kullanici> kullanici_ = kullaniciRepository.findById(kullaniciId);
         if (kullanici_.isPresent()) {
-            kullanici_.get().setDurum("PASIF");
-            kullaniciRepository.save(kullanici_.get());
+            kullaniciRepository.deleteById(kullaniciId);
         }
         kullaniciKayitResponse.setBasariliMi(true);
         return kullaniciKayitResponse;

@@ -36,10 +36,16 @@ public class MesajService {
 
     public MesajKayitResponse mesajKayit(Mesaj mesaj) {
         MesajKayitResponse response = new MesajKayitResponse();
-        mesaj.setDurum("aktif");
-        mesaj.setTarih(formattedDate());
-        mesajRepository.save(mesaj);
-        response.setSaved(true);
+        try {
+            mesaj.setDurum("aktif");
+            mesaj.setTarih(formattedDate());
+            mesajRepository.save(mesaj);
+            response.setSaved(true);
+        }
+        catch(Exception e){
+            response.setSaved(true);
+            return response;
+        }
         return response;
     }
 
@@ -73,6 +79,8 @@ public class MesajService {
         mesajDto.setId(mesaj.getId());
         mesajDto.setTarih(mesaj.getTarih());
         mesajDto.setMesajicerigi(mesaj.getMesajicerigi());
+        mesajDto.setGonderilenkullaniciid(mesaj.getGonderilenkullaniciid());
+        mesajDto.setGonderenkullaniciid(mesaj.getGonderenkullaniciid());
 
         if (mesaj.getGonderenkullaniciid() != null) {
             Optional<Kullanici> kullanici1 = kullaniciRepository.findById(mesaj.getGonderenkullaniciid());

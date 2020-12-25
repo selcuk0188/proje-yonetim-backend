@@ -9,5 +9,5 @@ public interface ProjeRepository extends JpaRepository<Proje, Integer> {
 
     List<Proje> findByKullaniciId(Integer kullaniciId);
 
-    Proje findByKullaniciIdAndDersId(Integer kullaniciId, Integer dersId);
+    List<Proje> findByKullaniciIdAndDersId(Integer kullaniciId, Integer dersId);
 }

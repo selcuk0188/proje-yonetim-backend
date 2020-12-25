@@ -2,11 +2,13 @@ package com.proje.yonetim.service;
 
 import com.proje.yonetim.entities.Ders;
 import com.proje.yonetim.entities.Kullanici;
+import com.proje.yonetim.entities.KullaniciDers;
 import com.proje.yonetim.entities.Proje;
 import com.proje.yonetim.model.ProjeDto;
 import com.proje.yonetim.model.ProjeKayitResponse;
 import com.proje.yonetim.model.ProjeListResponse;
 import com.proje.yonetim.repository.DersRepository;
+import com.proje.yonetim.repository.KullaniciDersRepository;
 import com.proje.yonetim.repository.KullaniciRepository;
 import com.proje.yonetim.repository.ProjeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,24 +30,37 @@ public class ProjeService {
     @Autowired
     private KullaniciRepository kullaniciRepository;
 
+    @Autowired
+    private KullaniciDersRepository kullaniciDersRepository;
+
 
     @Autowired
     private DersRepository dersRepository;
 
-    public ProjeListResponse getProjeList() {
+    public ProjeListResponse getProjeList(Integer kullaniciId) {
         ProjeListResponse response = new ProjeListResponse();
-        List<Proje> projeList = projeRepository.findAll();
-        List<ProjeDto> projeDtoList = projeList.stream().map(e -> getProjeDto(e)).collect(Collectors.toList());
-        response.setProjeList(projeDtoList);
+        List<ProjeDto> result = new ArrayList<>();
+        List<KullaniciDers> kullaniciDersList = kullaniciDersRepository.findByKullaniciId(kullaniciId);
+        for (KullaniciDers kullaniciDers : kullaniciDersList) {
+            List<KullaniciDers> byDersId = kullaniciDersRepository.findByDersId(kullaniciDers.getDersId());
+            for (KullaniciDers kullaniciDers1 : byDersId) {
+                if (!kullaniciDers1.getKullaniciId().equals(kullaniciId)) {
+                    List<Proje> byKullaniciId = projeRepository.findByKullaniciId(kullaniciDers1.getKullaniciId());
+                    List<ProjeDto> projeDtoList = byKullaniciId.stream().map(e -> getProjeDto(e, kullaniciDers1.getDersAdi())).collect(Collectors.toList());
+                    result.addAll(projeDtoList);
+                }
+            }
+        }
+        response.setProjeList(result);
         return response;
-
     }
 
-    private ProjeDto getProjeDto(Proje proje) {
+    private ProjeDto getProjeDto(Proje proje, String dersAdi) {
         ProjeDto projeDto = new ProjeDto();
         projeDto.setId(proje.getId());
         projeDto.setDurum(proje.getDurum());
         projeDto.setDersId(proje.getDersId());
+        projeDto.setDersAdi(dersAdi);
         projeDto.setKullaniciId(proje.getKullaniciId());
         projeDto.setSonIslemTarihi(proje.getSonIslemTarihi());
         projeDto.setProjeKonusu(proje.getProjeKonusu());
@@ -98,8 +114,8 @@ public class ProjeService {
 
     public ProjeKayitResponse assignProje(String projeKonusu, Integer kullaniciId, Integer dersId) {
         ProjeKayitResponse response = new ProjeKayitResponse();
-        Proje projeActual = projeRepository.findByKullaniciIdAndDersId(kullaniciId, dersId);
-        if (projeActual == null) {
+        List<Proje> projeActual = projeRepository.findByKullaniciIdAndDersId(kullaniciId, dersId);
+        if (projeActual == null || projeActual.isEmpty()) {
             Proje proje = new Proje();
             proje.setProjeKonusu(projeKonusu);
             proje.setKullaniciId(kullaniciId);
@@ -109,8 +125,10 @@ public class ProjeService {
             proje.setDersId(dersId);
             projeRepository.save(proje);
         } else {
-            projeActual.setProjeKonusu(projeKonusu);
-            projeRepository.save(projeActual);
+            if (!projeActual.isEmpty() && projeActual.get(0) != null) {
+                projeActual.get(0).setProjeKonusu(projeKonusu);
+                projeRepository.save(projeActual.get(0));
+            }
         }
         response.setBasariliMi(true);
         return response;

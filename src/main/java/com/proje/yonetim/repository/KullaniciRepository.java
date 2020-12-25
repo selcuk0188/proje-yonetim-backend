@@ -11,4 +11,6 @@ public interface KullaniciRepository extends JpaRepository<Kullanici, Integer> {
 
     List<Kullanici> findByRolId(Integer rolId);
 
+    List<Kullanici> findByTcNo(String tcNo);
+
 }

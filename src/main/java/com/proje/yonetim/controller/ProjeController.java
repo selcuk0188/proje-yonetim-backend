@@ -15,8 +15,8 @@ public class ProjeController {
     private ProjeService projeService;
 
     @RequestMapping(value = "/projeListele", method = RequestMethod.POST)
-    public ProjeListResponse projeListele() {
-        return projeService.getProjeList();
+    public ProjeListResponse projeListele(@RequestParam("kullaniciId") Integer kullaniciId) {
+        return projeService.getProjeList(kullaniciId);
     }
 
 
