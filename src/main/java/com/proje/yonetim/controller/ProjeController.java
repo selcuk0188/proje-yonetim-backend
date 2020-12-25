@@ -14,30 +14,30 @@ public class ProjeController {
     @Autowired
     private ProjeService projeService;
 
-    @RequestMapping(value = "/projeListele", method = RequestMethod.POST)
+    @RequestMapping(value = "/projeListele", method = RequestMethod.POST)       // kullanici idsine göre projeleri listeler
     public ProjeListResponse projeListele(@RequestParam("kullaniciId") Integer kullaniciId) {
         return projeService.getProjeList(kullaniciId);
     }
 
 
-    @RequestMapping(value = "/projeBykullaniciId", method = RequestMethod.POST)
+    @RequestMapping(value = "/projeBykullaniciId", method = RequestMethod.POST)  // kullanici idsine göre projeleri listeler
     public ProjeListResponse projeBykullaniciId(@RequestParam("kullaniciId") Integer kullaniciId) {
         return projeService.getProjeBykullaniciId(kullaniciId);
     }
 
-    @RequestMapping(value = "/projeKaydet", method = RequestMethod.POST)
+    @RequestMapping(value = "/projeKaydet", method = RequestMethod.POST)  // projenin kaydedilmesini sağlar
     public ProjeKayitResponse projeKaydet(@RequestBody Proje proje) {
         return projeService.saveProje(proje);
     }
-
-    @RequestMapping(value = "/projeAta", method = RequestMethod.POST)
+    
+    @RequestMapping(value = "/projeAta", method = RequestMethod.POST)        // projenin öğrenciye atanmasını sağlar
     public ProjeKayitResponse projeAta(@RequestParam("projeKonusu") String projeKonusu,
                                        @RequestParam("kullaniciId") Integer kullaniciId,
                                        @RequestParam("dersId") Integer dersId) {
         return projeService.assignProje(projeKonusu, kullaniciId, dersId);
     }
 
-    @RequestMapping(value = "/projeDurumGuncelle", method = RequestMethod.POST)
+    @RequestMapping(value = "/projeDurumGuncelle", method = RequestMethod.POST)  // projenin durumunu gunceller
     public ProjeKayitResponse projeKaydet(@RequestParam("projeId") Integer projeId) {
         return projeService.updateProje(projeId);
     }
