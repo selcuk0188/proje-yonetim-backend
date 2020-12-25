@@ -14,7 +14,7 @@ public class RolController {
     @Autowired
     private RolService rolService;
 
-    @RequestMapping(value = "/rolListele", method = RequestMethod.POST)
+    @RequestMapping(value = "/rolListele", method = RequestMethod.POST)  // rolleri listeler
     public RolResponse rolListele() {
         return rolService.getRol();
     }
