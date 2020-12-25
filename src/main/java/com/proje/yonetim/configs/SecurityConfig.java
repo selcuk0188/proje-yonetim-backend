@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @EnableWebSecurity
 @Configuration
-class SecurityConfig extends WebSecurityConfigurerAdapter {
+class SecurityConfig extends WebSecurityConfigurerAdapter {         //onyuzden istek gelebilmesi icin uygulama guvenlik ayarı
 
     private static final String[] AUTH_WHITELIST = {
 
