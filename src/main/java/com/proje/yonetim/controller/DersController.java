@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class DersController {
+@RestController                                                         // REST API
+public class DersController {                                           // Önyüzün isteğinin ilk geldiği katman
 
     @Autowired
     private DersService dersService;
 
-    @RequestMapping(value = "/dersListele", method = RequestMethod.POST)
+    @RequestMapping(value = "/dersListele", method = RequestMethod.POST) // Tüm dersleri önyüze döner
     public DersResponse dersListele() {
-        return dersService.getDers();
+        return dersService.getDers();                                    // Listelemek için servis katmanını çağırır
     }
 
-    @RequestMapping(value = "/dersKaydet", method = RequestMethod.POST)
+    @RequestMapping(value = "/dersKaydet", method = RequestMethod.POST) // Önyüzden gelen derslerin kaydedilmesini sağlar
     public DersKayitResponse dersKaydet(@RequestBody Ders ders) {
-        return dersService.saveDers(ders);
+        return dersService.saveDers(ders);                              // Kayıt için servis katmanını çağırır
     }
 
 }
