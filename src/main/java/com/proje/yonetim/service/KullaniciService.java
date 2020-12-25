@@ -30,7 +30,7 @@ public class KullaniciService {
     private DersRepository dersRepository;
 
 
-    public KullaniciListProjeResponse getKullaniciList(Integer rolId, Integer kullaniciId) {
+    public KullaniciListProjeResponse getKullaniciList(Integer rolId, Integer kullaniciId) {        // Kullanici ve rol id sine göre kullanicilari ders iliskili tablodan hesaplayıp listeler
         KullaniciListProjeResponse response = new KullaniciListProjeResponse();
         List<KullaniciListProje> result = new ArrayList<>();
         List<KullaniciDers> byKullaniciId = kullaniciDersRepository.findByKullaniciId(kullaniciId);
@@ -47,14 +47,14 @@ public class KullaniciService {
         return response;
     }
 
-    public KullaniciResponse getKullaniciList(Integer rolId) {
+    public KullaniciResponse getKullaniciList(Integer rolId) {          // kullanici listesini rol id sine göre listeler
         KullaniciResponse response = new KullaniciResponse();
         List<Kullanici> byRolId = kullaniciRepository.findByRolId(rolId);
         response.setKullaniciList(byRolId);
         return response;
     }
 
-    private KullaniciListProje convertKullanici(Kullanici kullanici, Integer rolId, Integer dersId, String dersAdi) {
+    private KullaniciListProje convertKullanici(Kullanici kullanici, Integer rolId, Integer dersId, String dersAdi) { // obje dönüşümü için
         KullaniciListProje kullaniciListProje = new KullaniciListProje();
         kullaniciListProje.setKullaniciAdi(kullanici.getKullaniciAdi());
         kullaniciListProje.setId(kullanici.getId());
@@ -71,8 +71,8 @@ public class KullaniciService {
         return kullaniciListProje;
     }
 
-
-    public KullaniciByIdResponse getKullaniciById(Integer kullaniciId) {
+ 
+    public KullaniciByIdResponse getKullaniciById(Integer kullaniciId) {        // kullanici id sine görekullanicilar listeler
         KullaniciByIdResponse response = new KullaniciByIdResponse();
         Optional<Kullanici> kullanici = kullaniciRepository.findById(kullaniciId);
         if (kullanici.isPresent())
@@ -81,7 +81,7 @@ public class KullaniciService {
 
     }
 
-    public KullaniciResponse getKullaniciList() {
+    public KullaniciResponse getKullaniciList() {       // kullancıların hepsini listeler
         KullaniciResponse response = new KullaniciResponse();
         List<Kullanici> kullaniciList = kullaniciRepository.findAll();
         response.setKullaniciList(kullaniciList);
@@ -89,7 +89,7 @@ public class KullaniciService {
 
     }
 
-    public KullaniciDersResponse getKullaniciDersList() {
+    public KullaniciDersResponse getKullaniciDersList() {   // kullanıcnın ders listelerini getirir
         KullaniciDersResponse response = new KullaniciDersResponse();
         List<KullaniciDers> kullaniciDersList = kullaniciDersRepository.findAll();
         List<KullaniciDersList> kullaniciDersListList = kullaniciDersList.stream().map(e -> convert(e)).collect(Collectors.toList());
@@ -98,7 +98,7 @@ public class KullaniciService {
 
     }
 
-    private KullaniciDersList convert(KullaniciDers kullaniciDers) {
+    private KullaniciDersList convert(KullaniciDers kullaniciDers) {    // obje dönüşümü için
         KullaniciDersList kullaniciDersList = new KullaniciDersList();
         kullaniciDersList.setKullaniciId(kullaniciDers.getKullaniciId());
         kullaniciDersList.setDersId(kullaniciDers.getDersId());
@@ -115,7 +115,7 @@ public class KullaniciService {
         return kullaniciDersList;
     }
 
-    public LoginKullaniciResponse getKullanici(String tckn, String sifre) {
+    public LoginKullaniciResponse getKullanici(String tckn, String sifre) { // login sayfası için tckn ve şifre göre kullanıcı getirir
         LoginKullaniciResponse response = new LoginKullaniciResponse();
         Kullanici kullanici = kullaniciRepository.findByTcNoAndSifre(tckn, sifre);
         if (kullanici == null) {
@@ -125,7 +125,7 @@ public class KullaniciService {
         return response;
     }
 
-    public KullaniciKayitResponse saveKullanici(Kullanici kullanici) {
+    public KullaniciKayitResponse saveKullanici(Kullanici kullanici) { // kullanıcı kayıt eder
         KullaniciKayitResponse kullaniciKayitResponse = new KullaniciKayitResponse();
         kullaniciRepository.save(kullanici);
         return kullaniciKayitResponse;
