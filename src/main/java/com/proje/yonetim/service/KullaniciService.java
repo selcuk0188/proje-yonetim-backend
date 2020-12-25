@@ -1,13 +1,16 @@
 package com.proje.yonetim.service;
 
 import com.proje.yonetim.entities.Kullanici;
+import com.proje.yonetim.entities.Proje;
 import com.proje.yonetim.model.*;
 import com.proje.yonetim.repository.KullaniciRepository;
+import com.proje.yonetim.repository.ProjeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class KullaniciService {
@@ -15,10 +18,40 @@ public class KullaniciService {
     @Autowired
     private KullaniciRepository kullaniciRepository;
 
-    public KullaniciResponse getKullaniciList(Integer rolId) {
-        KullaniciResponse response = new KullaniciResponse();
+    @Autowired
+    private ProjeRepository projeRepository;
+
+
+    public KullaniciListProjeResponse getKullaniciList(Integer rolId,Integer dersId) {
+        KullaniciListProjeResponse response = new KullaniciListProjeResponse();
         List<Kullanici> kullaniciList = kullaniciRepository.findByRolId(rolId);
-        response.setKullaniciList(kullaniciList);
+        List<KullaniciListProje> kullaniciListProjeList = kullaniciList.stream().map(e -> convertKullanici(e,rolId,dersId)).collect(Collectors.toList());
+        response.setKullaniciList(kullaniciListProjeList);
+        return response;
+
+    }
+
+    private KullaniciListProje convertKullanici(Kullanici kullanici, Integer rolId, Integer dersId) {
+        KullaniciListProje kullaniciListProje = new KullaniciListProje();
+        kullaniciListProje.setKullaniciAdi(kullanici.getKullaniciAdi());
+        kullaniciListProje.setId(kullanici.getId());
+        kullaniciListProje.setDurum(kullanici.getDurum());
+        kullaniciListProje.setSifre(kullanici.getSifre());
+        kullaniciListProje.setAdSoyad(kullanici.getAdSoyad());
+        kullaniciListProje.setTcNo(kullanici.getTcNo());
+        if (rolId == 1) {
+            Proje proje = projeRepository.findByKullaniciIdAndDersId(kullanici.getId(), dersId);
+            kullaniciListProje.setProje(proje==null ? new Proje() : proje);
+        }
+        return kullaniciListProje;
+    }
+
+
+    public KullaniciByIdResponse getKullaniciById(Integer kullaniciId) {
+        KullaniciByIdResponse response = new KullaniciByIdResponse();
+        Optional<Kullanici> kullanici = kullaniciRepository.findById(kullaniciId);
+        if (kullanici.isPresent())
+            response.setKullanici(kullanici.get());
         return response;
 
     }
@@ -34,7 +67,7 @@ public class KullaniciService {
     public LoginKullaniciResponse getKullanici(String tckn, String sifre) {
         LoginKullaniciResponse response = new LoginKullaniciResponse();
         Kullanici kullanici = kullaniciRepository.findByTcNoAndSifre(tckn, sifre);
-        if(kullanici == null){
+        if (kullanici == null) {
             response.setBasariliMi(false);
         }
         response.setKullanici(kullanici);

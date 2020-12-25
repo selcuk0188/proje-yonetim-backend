@@ -2,14 +2,10 @@ package com.proje.yonetim.controller;
 
 
 import com.proje.yonetim.entities.Kullanici;
-import com.proje.yonetim.entities.Rol;
 import com.proje.yonetim.model.*;
 import com.proje.yonetim.service.KullaniciService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 
 @RestController
@@ -19,8 +15,13 @@ public class KullaniciController {
     private KullaniciService kullaniciService;
 
     @RequestMapping(value = "/kullaniciListele", method = RequestMethod.POST)
-    public KullaniciResponse kullaniciListele(@RequestParam("rolId") Integer rolId) {
-        return kullaniciService.getKullaniciList(rolId);
+    public KullaniciListProjeResponse kullaniciListele(@RequestParam("rolId") Integer rolId, @RequestParam("dersId") Integer dersId) {
+        return kullaniciService.getKullaniciList(rolId, dersId);
+    }
+
+    @RequestMapping(value = "/kullaniciById", method = RequestMethod.POST)
+    public KullaniciByIdResponse getKullaniciById(@RequestParam("kullaniciId") Integer kullaniciId) {
+        return kullaniciService.getKullaniciById(kullaniciId);
     }
 
     @RequestMapping(value = "/kullaniciListeleHepsi", method = RequestMethod.POST)
